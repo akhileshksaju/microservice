@@ -22,7 +22,7 @@ public class OrderControler {
       
 
   @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
+  // @ResponseStatus(HttpStatus.CREATED)
   public String placeOrder (@RequestBody OrderRequest orderRequest) {
       //TODO: process POST request
       orderService.placeOrder(orderRequest);
