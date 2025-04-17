@@ -7,7 +7,6 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
-
 import com.aksprojects.order_service.DTO.InventoryResponse;
 import com.aksprojects.order_service.DTO.OrderLineItemDTO;
 import com.aksprojects.order_service.DTO.OrderRequest;
@@ -25,9 +24,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class OrderService {
 
+
   
   private final OrderRepository orderRepository;
-  private final WebClient webClient;
+  private final WebClient.Builder webClientBuilder;
+
 
   public void placeOrder(OrderRequest orderRequest){
     Order order = new Order();
@@ -42,12 +43,8 @@ public class OrderService {
 
 
     //need to call to inventory service to check the stock over there 
-    InventoryResponse[] result = webClient.get()
-    .uri(uriBuilder -> uriBuilder
-            .scheme("http")
-            .host("localhost")
-            .port(8082)
-            .path("/api/inventory")
+    InventoryResponse[] result = webClientBuilder.build().get()
+    .uri("http://inventory-Service/api/inventory",uriBuilder -> uriBuilder
             .queryParam("skuCodes", skuCodeList)
             .build())
     .retrieve()
