@@ -3,10 +3,8 @@ package com.aksprojects.ProdectService.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aksprojects.ProdectService.ProdectServiceApplication;
 import com.aksprojects.ProdectService.DTO.ProductRequest;
 import com.aksprojects.ProdectService.DTO.ProductResponse;
-import com.aksprojects.ProdectService.Model.Product;
 import com.aksprojects.ProdectService.Service.ProductService;
 
 import lombok.RequiredArgsConstructor;
@@ -14,10 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("productService")
+@RequestMapping("/api/product")
 @RequiredArgsConstructor
 @Slf4j
 public class ProductServiceController {
