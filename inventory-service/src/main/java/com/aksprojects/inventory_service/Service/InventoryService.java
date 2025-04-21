@@ -20,10 +20,15 @@ public class InventoryService {
   private final InventoryRepository inventoryRepository;
 
   @Transactional(readOnly = true)
-  public List<InventoryResponse> isAvailable(List<String> skuCodes){
+  public List<InventoryResponse> isAvailable(List<String> skuCodes) throws InterruptedException{
+
+    Thread.sleep(10000);
+    log.info("thread is sleeping");
+    
+
     List<Inventory> inStockItems = inventoryRepository.findBySkuCodeIn(skuCodes);
-    inStockItems.stream().forEach(item->System.out.println(item.getSkuCode()));
-    log.info(inStockItems.isEmpty()?"empty":"not Empty");
+    // inStockItems.stream().forEach(item->System.out.println(item.getSkuCode()));
+    // log.info(inStockItems.isEmpty()?"empty":"not Empty");
 
 
    return inStockItems.stream().map(item ->InventoryResponse.builder().skuCode(item.getSkuCode())

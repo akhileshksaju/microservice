@@ -25,7 +25,7 @@ public class InventoryController {
 
   @GetMapping()
   @ResponseStatus(HttpStatus.OK)
-  public List<InventoryResponse> getMethodName(@RequestParam("skuCodes") List<String> skuCodes) {
+  public List<InventoryResponse> getMethodName(@RequestParam("skuCodes") List<String> skuCodes) throws InterruptedException {
       return inventoryService.isAvailable(skuCodes);
   }
   
