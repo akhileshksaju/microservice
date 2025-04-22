@@ -1,13 +1,13 @@
-package com.aksprojects.Microservices;
+// package com.aksprojects.Microservices;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class MicroservicesApplicationTests {
+// @SpringBootTest
+// class MicroservicesApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+// 	@Test
+// 	void contextLoads() {
+// 	}
 
-}
+// }

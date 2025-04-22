@@ -22,8 +22,7 @@ public class InventoryService {
   @Transactional(readOnly = true)
   public List<InventoryResponse> isAvailable(List<String> skuCodes) throws InterruptedException{
 
-    Thread.sleep(10000);
-    log.info("thread is sleeping");
+    
     
 
     List<Inventory> inStockItems = inventoryRepository.findBySkuCodeIn(skuCodes);

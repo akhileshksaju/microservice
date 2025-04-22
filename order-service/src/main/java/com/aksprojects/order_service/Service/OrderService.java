@@ -15,8 +15,11 @@ import com.aksprojects.order_service.Model.Order;
 import com.aksprojects.order_service.Model.OrderLineItem;
 import com.aksprojects.order_service.Repository.OrderRepository;
 
+import io.micrometer.tracing.Span;
+import io.opentelemetry.api.trace.Tracer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import zipkin2.internal.Trace;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderService {
 
 
+  private final io.micrometer.tracing.Tracer trace;
   
   private final OrderRepository orderRepository;
   private final WebClient.Builder webClientBuilder;
@@ -42,7 +46,10 @@ public class OrderService {
     List<String> skuCodeList = orderLineItems.stream().map(item->item.getSkuCode()).toList();
 
 
-    //need to call to inventory service to check the stock over there 
+   
+    Span inventoryServiceLookup = trace.nextSpan().name("inventory-service-lookup");
+    //need to call to inventory service to check the stock over there
+    trace.withSpan(inventoryServiceLookup.start()); 
     InventoryResponse[] result = webClientBuilder.build().get()
     .uri("http://inventory-Service/api/inventory",uriBuilder -> uriBuilder
             .queryParam("skuCodes", skuCodeList)

@@ -18,6 +18,7 @@
 		<module>order-service</module>
 		<module>discovery-server</module>
 		<module>api-gateway</module>
+		<module>tracing-config</module>
 	</modules>
 	<name>Microservices</name>
 	<description>microservice projecr</description>
@@ -54,6 +55,29 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+
+			<!-- Micrometer Tracing -->
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-tracing</artifactId>
+      <version>1.2.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-tracing-bridge-brave</artifactId>
+      <version>1.2.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.zipkin.reporter2</groupId>
+      <artifactId>zipkin-reporter-brave</artifactId>
+      <version>2.16.3</version>
+    </dependency>
+
+
+
+
     </dependencies>
 </dependencyManagement>
 
