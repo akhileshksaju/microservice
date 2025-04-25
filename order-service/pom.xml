@@ -95,6 +95,13 @@
   <artifactId>opentelemetry-exporter-zipkin</artifactId>
 </dependency>
 
+<!-- dev tools -->
+
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-devtools</artifactId>
+</dependency>
+
 	</dependencies>
 
 </project>

@@ -3,6 +3,7 @@ package com.aksprojects.order_service.Service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,8 @@ import com.aksprojects.order_service.DTO.OrderRequest;
 import com.aksprojects.order_service.Exception.ItemNotAvailableException;
 import com.aksprojects.order_service.Model.Order;
 import com.aksprojects.order_service.Model.OrderLineItem;
+import com.aksprojects.order_service.Model.OrderProcessing;
+import com.aksprojects.order_service.Repository.OrderProcessingRepository;
 import com.aksprojects.order_service.Repository.OrderRepository;
 
 import io.micrometer.tracing.Span;
@@ -32,6 +35,7 @@ public class OrderService {
   
   private final OrderRepository orderRepository;
   private final WebClient.Builder webClientBuilder;
+  private final OrderProcessingRepository orderProcessingRepository;
 
 
   public String  placeOrder(OrderRequest orderRequest){
@@ -56,17 +60,20 @@ public class OrderService {
             .build())
     .retrieve()
     .bodyToMono(InventoryResponse[].class)
-    .block();  // <-- this gives you InventoryResponse[]
+    .block();
+      // <-- this gives you InventoryResponse[]
 
-    Arrays.stream(result).forEach(item ->log.info(item.isAvailable()?"y":"n"));
+    // Arrays.stream(result).forEach(item ->log.info(item.isAvailable()?"y":"n"));
 
     boolean allAvailable = result.length > 0 &&Arrays.stream(result).allMatch(InventoryResponse::isAvailable);
-    System.err.println(allAvailable);
+   
 
-    log.info(allAvailable?"yes":"no");
+    // log.info(allAvailable?"yes":"no");
 
     if (allAvailable) {
+      log.info("all available");
       orderRepository.save(order);
+      orderProcessingRepository.saveAll(maptoOrderProcessingDTO(skuCodeList));
       return "order processed";
 
     }
@@ -75,6 +82,14 @@ public class OrderService {
     }
 
 
+  }
+
+  private List<OrderProcessing> maptoOrderProcessingDTO(List<String> skuCodeList) {
+    // TODO Auto-generated method stub
+
+    log.info("order is added to kafka msging table");
+
+    return skuCodeList.stream().map(skuCode->OrderProcessing.builder().skuCode(skuCode).build()).collect(Collectors.toList());
   }
 
   public OrderLineItem mapToDto(OrderLineItemDTO orderLineItem){
