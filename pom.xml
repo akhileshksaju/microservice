@@ -20,6 +20,7 @@
 		<module>api-gateway</module>
 		<module>tracing-config</module>
 		<module>orderpuller</module>
+		<module>notification-service</module>
 	</modules>
 	<name>Microservices</name>
 	<description>microservice projecr</description>
