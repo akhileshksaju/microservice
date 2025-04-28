@@ -19,10 +19,8 @@ import com.aksprojects.order_service.Repository.OrderProcessingRepository;
 import com.aksprojects.order_service.Repository.OrderRepository;
 
 import io.micrometer.tracing.Span;
-import io.opentelemetry.api.trace.Tracer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import zipkin2.internal.Trace;
 
 @Service
 @RequiredArgsConstructor
